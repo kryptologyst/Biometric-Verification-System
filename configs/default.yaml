@@ -1,0 +1,103 @@
+# Default configuration for biometric verification system
+
+# System settings
+system:
+  random_seed: 42
+  device: "auto"  # auto, cpu, cuda, mps
+  log_level: "INFO"
+  
+# Data settings
+data:
+  synthetic:
+    n_users: 100
+    n_samples_per_user: 10
+    modalities: ["fingerprint", "face", "voice"]
+    
+  splits:
+    train_ratio: 0.7
+    val_ratio: 0.15
+    test_ratio: 0.15
+    
+# Model settings
+models:
+  fingerprint:
+    threshold: 0.3
+    feature_dim: 128
+    similarity_metric: "cosine"
+    
+  face:
+    threshold: 0.6
+    feature_dim: 512
+    similarity_metric: "cosine"
+    
+  voice:
+    threshold: 0.4
+    feature_dim: 256
+    similarity_metric: "cosine"
+    
+# Anti-spoofing settings
+anti_spoofing:
+  enabled: true
+  liveness_threshold: 0.7
+  
+  fingerprint:
+    classifier: "random_forest"
+    n_estimators: 100
+    
+  face:
+    classifier: "svm"
+    kernel: "rbf"
+    
+  voice:
+    classifier: "random_forest"
+    n_estimators: 100
+    
+# Evaluation settings
+evaluation:
+  metrics:
+    - "EER"
+    - "minDCF"
+    - "ROC_AUC"
+    - "PR_AUC"
+    - "FAR"
+    - "FRR"
+    
+  plots:
+    - "roc_curve"
+    - "det_curve"
+    - "score_distributions"
+    
+# Demo settings
+demo:
+  streamlit:
+    port: 8501
+    host: "localhost"
+    
+  gradio:
+    port: 7860
+    share: false
+    
+# Privacy settings
+privacy:
+  anonymize_pii: true
+  hash_user_ids: true
+  data_retention_days: 30
+  
+# Security settings
+security:
+  input_validation: true
+  max_file_size_mb: 10
+  allowed_file_types: [".jpg", ".jpeg", ".png", ".wav", ".mp3"]
+  
+# Logging settings
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/biometric_system.log"
+  
+# Output settings
+output:
+  save_models: true
+  save_results: true
+  save_plots: true
+  output_dir: "assets/generated"

@@ -1,0 +1,35 @@
+# Fingerprint-specific configuration
+
+# Inherit from default config
+defaults:
+  - default.yaml
+
+# Override fingerprint-specific settings
+models:
+  fingerprint:
+    threshold: 0.25  # More sensitive for fingerprint
+    feature_dim: 128
+    similarity_metric: "cosine"
+    
+# Anti-spoofing for fingerprint
+anti_spoofing:
+  fingerprint:
+    classifier: "random_forest"
+    n_estimators: 200
+    max_depth: 10
+    
+# Evaluation specific to fingerprint
+evaluation:
+  metrics:
+    - "EER"
+    - "minDCF"
+    - "ROC_AUC"
+    - "FAR_at_EER"
+    - "FRR_at_EER"
+    
+# Data generation for fingerprint
+data:
+  synthetic:
+    n_users: 200
+    n_samples_per_user: 15
+    modalities: ["fingerprint"]
